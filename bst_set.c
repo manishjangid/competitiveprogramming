@@ -64,6 +64,18 @@ void inorder_traversal(tree_t *bst_p) {
     inorder_traversal(bst_p->right);
 }
 
+void free_memory(tree_t *bst_p) {
+	static int count = 0;
+    if (bst_p == NULL) {
+        return;
+    }
+    free_memory(bst_p->left);
+    free_memory(bst_p->right);
+    count++;
+    printf("Freeing %d , total: %d\n", bst_p->data, count);
+    free(bst_p);
+}
+
 int main(int argc, char *argv[]) {
     tree_t *bst_p = NULL;
     int index = 0, count = 0;
@@ -102,9 +114,12 @@ int main(int argc, char *argv[]) {
 #endif
 
 
-        printf("Display elements now in BST \n\n\n");
-        inorder_traversal(bst_p);
-        printf("\n");
+    printf("Display elements now in BST \n\n\n");
+    inorder_traversal(bst_p);
+    printf("\n");
 	
-	/*TODO: Free the memory */
+    /* Free the memory */
+    free_memory(bst_p);
+    /* Clearing out dangling pointer */
+    bst_p = NULL;
 }
