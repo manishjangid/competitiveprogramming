@@ -15,6 +15,7 @@ using namespace std;
 
 int *temp_array; //Global for this instance 
 int sz_of_arr = 0;
+int inverse_count = 0;
 
 void merge(vector<int>& list, int start, int mid, int end) {
     int l1_start = start;
@@ -25,6 +26,9 @@ void merge(vector<int>& list, int start, int mid, int end) {
         if (list[l1_start] < list[l2_start]) {
             temp_array[temp_idx++] = list[l1_start++]; 
         } else {
+            if (list[l1_start] != list[l2_start]) {
+                inverse_count += (mid - l1_start + 1);
+            }
             temp_array[temp_idx++] = list[l2_start++];
         }
     }
@@ -79,5 +83,6 @@ int main(int argc, char *argv[]) {
         cout<<input[idx]<<" ";
     }
     cout<<endl;
+    cout<<"Inverse count "<<inverse_count<<endl;
     return 0;
 }
